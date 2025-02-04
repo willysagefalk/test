@@ -1,0 +1,68 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ns0: <http://www.example.org/smart-home#> .
+
+<http://www.example.org/smart-home>
+  a owl:Ontology ;
+  rdfs:comment "An ontology representing a smart home with zones, devices, and their relationships." ;
+  rdfs:label "Smart Home Ontology" .
+
+<sh:Zone>
+  a owl:Class ;
+  rdfs:label "Zone" ;
+  rdfs:comment "A specific area or region within a smart home (e.g., Living Room, Kitchen)." .
+
+<sh:Device>
+  a owl:Class ;
+  rdfs:label "Device" ;
+  rdfs:comment "A smart device within the smart home (e.g., Thermostat, Light, Sensor)." .
+
+<sh:Sensor>
+  a owl:Class ;
+  rdfs:label "Sensor" ;
+  rdfs:subClassOf <sh:Device> ;
+  rdfs:comment "A device that senses environmental data (e.g., temperature, motion)." .
+
+<sh:Actuator>
+  a owl:Class ;
+  rdfs:label "Actuator" ;
+  rdfs:subClassOf <sh:Device> ;
+  rdfs:comment "A device that performs actions (e.g., turning on/off a light)." .
+
+<sh:hasDevice>
+  a owl:ObjectProperty ;
+  rdfs:label "hasDevice" ;
+  rdfs:domain <sh:Zone> ;
+  rdfs:range <sh:Device> ;
+  rdfs:comment "Relates a zone to the devices it contains." .
+
+<sh:isPartOf>
+  a owl:ObjectProperty ;
+  rdfs:label "isPartOf" ;
+  rdfs:domain <sh:Zone> ;
+  rdfs:range <sh:Zone> ;
+  rdfs:comment "Represents a subzone relationship within the home (e.g., Kitchen is part of First Floor)." .
+
+<sh:deviceName>
+  a owl:DatatypeProperty ;
+  rdfs:label "deviceName" ;
+  rdfs:domain <sh:Device> ;
+  rdfs:range xsd:string ;
+  rdfs:comment "The name of a smart device." .
+
+<sh:zoneName>
+  a owl:DatatypeProperty ;
+  rdfs:label "zoneName" ;
+  rdfs:domain <sh:Zone> ;
+  rdfs:range xsd:string ;
+  rdfs:comment "The name of a zone in the smart home." .
+
+<sh:LivingRoom>
+  a <http://www.example.org/smart-home#Zone> ;
+  ns0:zoneName "Living Room"^^xsd:string ;
+  ns0:hasDevice <sh:SmartThermostat> .
+
+<sh:SmartThermostat>
+  a ns0:Device ;
+  ns0:deviceName "Smart Thermostat"^^xsd:string .
